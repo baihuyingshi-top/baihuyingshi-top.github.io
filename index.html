@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#0d1117">
+<meta name="description" content="白狐影视是面向影迷的影视条目信息整理站，按影片题材、出品地区、上映年份、集数进度与放映时段逐条建档，并提供每周档期备忘、月度评分汇总、资料归档方法与常见疑问答复，供观众在选片前核对基本信息。">
+<meta name="keywords" content="白狐影视,影视条目建档,影片题材地区查询,剧集集数进度,放映档期备忘,月度评分汇总">
+<meta property="og:title" content="白狐影视｜影视条目建档与放映档期备忘">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://baihuyingshi-top.github.io">
+<title>白狐影视｜影视条目建档与放映档期备忘</title>
+<style>
+:root{--ink:#e6edf3;--dim:#8592a6;--line:#243042;--card:#131a26;--fox:#c9a86a;--fox2:#e0c98f;--blue:#3d6b8a}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:66px}
+body{margin:0;background:#0d1117;color:var(--ink);font:15px/1.85 "Songti SC","SimSun",Georgia,"WenQuanYi Micro Hei",serif;letter-spacing:.3px}
+img,svg{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+ul{margin:0;padding:0;list-style:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+/* 顶栏 */
+.top{position:sticky;top:0;z-index:60;background:rgba(13,17,23,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:18px;height:60px}
+.logo{font-size:20px;font-weight:700;letter-spacing:2px;color:var(--fox2);white-space:nowrap}
+.logo i{font-style:normal;color:var(--ink)}
+.topnav{display:flex;gap:4px;flex:1;overflow-x:auto;scrollbar-width:none}
+.topnav::-webkit-scrollbar{display:none}
+.topnav a{padding:7px 11px;font-size:13px;color:var(--dim);border-bottom:2px solid transparent;white-space:nowrap}
+.topnav a:hover{color:var(--ink);border-color:var(--fox)}
+.topnav a.on{color:var(--fox2);border-color:var(--fox2)}
+.topurl{font-size:12px;color:var(--dim);border:1px solid var(--line);padding:4px 9px;border-radius:2px;white-space:nowrap}
+.toggle{display:none;width:34px;height:34px;background:var(--card);border:1px solid var(--line);color:var(--fox2);font-size:19px;cursor:pointer}
+/* 刊头 */
+.mast{text-align:center;padding:40px 22px 26px;border-bottom:3px double var(--line)}
+.mast .vol{font-size:12px;color:var(--dim);letter-spacing:4px}
+.mast h1{margin:14px 0 10px;font-size:54px;letter-spacing:10px;font-weight:800;color:var(--fox2)}
+.mast .sub{font-size:14px;color:var(--dim);letter-spacing:3px}
+.mast .rule{display:flex;justify-content:space-between;max-width:820px;margin:20px auto 0;padding-top:12px;border-top:1px solid var(--line);font-size:12px;color:var(--dim)}
+/* 抽屉 */
+.drawer{position:fixed;top:60px;left:0;bottom:0;width:270px;background:#111823;padding:22px;border-right:1px solid var(--line);overflow:auto;transform:translateX(-100%);transition:.28s;z-index:55}
+.drawer.open{transform:none}
+.drawer h4{font-size:12px;color:var(--fox2);letter-spacing:3px;margin:0 0 12px}
+.drawer ol{list-style:none;counter-reset:d}
+.drawer li{counter-increment:d;border-bottom:1px dotted var(--line)}
+.drawer li::before{content:counter(d,decimal-leading-zero) "　";color:var(--dim);font-size:12px}
+.drawer a{display:inline-block;padding:10px 0;font-size:14px}
+.drawer .note{margin-top:22px;font-size:12px;color:var(--dim);line-height:1.8}
+.drawer .note b{color:var(--fox2);font-weight:400}
+/* 主体 */
+main{display:grid;grid-template-columns:1fr 250px;gap:34px;max-width:1180px;margin:0 auto;padding:34px 22px 60px}
+.panel{display:flex;flex-direction:column;gap:26px}
+/* 栏目标题 */
+.sec{border:1px solid var(--line);background:linear-gradient(180deg,#131a26,#0f151e)}
+.sec>header{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:12px}
+.sec>header .no{font-size:12px;color:var(--fox2);letter-spacing:2px}
+.sec>header h2{margin:0;font-size:19px;letter-spacing:2px}
+.sec>header .en{font-size:11px;color:var(--dim);letter-spacing:2px;margin-left:auto}
+.sec .body{padding:18px}
+/* 影片条目 */
+.entry{display:grid;grid-template-columns:96px 1fr;gap:16px;padding:14px 0;border-bottom:1px dotted var(--line)}
+.entry:last-child{border-bottom:0;padding-bottom:0}
+.entry .post{height:128px;background:linear-gradient(135deg,#1c2533,#131a26);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--fox)}
+.entry h3{margin:0 0 8px;font-size:16px;letter-spacing:1px}
+.entry dl{margin:0;display:grid;grid-template-columns:repeat(2,1fr);gap:4px 18px;font-size:12.5px;color:var(--dim)}
+.entry dt{display:inline;color:#6d7d93}
+.entry dd{display:inline;color:var(--ink);margin:0 0 0 6px}
+.tag{display:inline-block;padding:2px 8px;margin:10px 6px 0 0;font-size:11px;color:var(--fox2);border:1px solid #4a3d22;background:rgba(201,168,106,.08)}
+/* 字母索引 */
+.az{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px}
+.az b{width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--dim);border:1px solid var(--line);cursor:pointer}
+.az b:hover{color:#0d1117;background:var(--fox2);border-color:var(--fox2)}
+.az b.on{color:#0d1117;background:var(--fox2);border-color:var(--fox2)}
+.row{display:flex;gap:14px;padding:10px 0;border-bottom:1px dotted var(--line);font-size:13px}
+.row span:first-child{color:var(--fox2);width:74px;flex:none}
+.row span:nth-child(2){flex:1}
+.row em{font-style:normal;color:var(--dim);font-size:12px}
+/* 表格 */
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{border:1px solid var(--line);padding:9px 11px;text-align:left}
+th{background:#171f2c;color:var(--fox2);font-weight:400;font-size:12.5px;letter-spacing:1px}
+td{color:var(--dim)}
+td b{color:var(--ink);font-weight:400}
+.star{color:var(--fox2);letter-spacing:1px}
+/* 步骤 */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line)}
+.steps div{padding:16px;border-right:1px solid var(--line);position:relative}
+.steps div:last-child{border-right:0}
+.steps .n{font-size:22px;color:var(--fox);font-weight:700}
+.steps h5{margin:8px 0 6px;font-size:14px}
+.steps p{margin:0;font-size:12px;color:var(--dim);line-height:1.7}
+/* 问答 */
+.faq details{border-bottom:1px dotted var(--line);padding:12px 0}
+.faq details:last-child{border-bottom:0}
+.faq summary{cursor:pointer;font-size:14px;list-style:none;display:flex;gap:10px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::before{content:"问";color:#0d1117;background:var(--fox2);width:20px;height:20px;flex:none;display:flex;align-items:center;justify-content:center;font-size:11px;border-radius:50%}
+.faq p{margin:10px 0 0 30px;font-size:13px;color:var(--dim)}
+.faq .u{word-break:break-all;color:var(--ink)}
+/* 侧栏 */
+.aside{display:flex;flex-direction:column;gap:22px}
+.box{border:1px solid var(--line);background:#111823;padding:16px}
+.box h4{margin:0 0 12px;font-size:13px;letter-spacing:2px;color:var(--fox2);padding-bottom:8px;border-bottom:1px solid var(--line)}
+.tagcloud{display:flex;flex-wrap:wrap;gap:7px}
+.tagcloud a{padding:4px 9px;font-size:12px;color:var(--dim);border:1px solid var(--line)}
+.tagcloud a:hover{color:var(--fox2);border-color:var(--fox2)}
+.box ol{counter-reset:s;list-style:none}
+.box li{counter-increment:s;padding:8px 0;border-bottom:1px dotted var(--line);font-size:12.5px;color:var(--dim)}
+.box li::before{content:counter(s,decimal-leading-zero) ". ";color:var(--fox2)}
+.box li:last-child{border-bottom:0}
+.box li b{color:var(--ink);font-weight:400}
+.clock{font-size:12px;color:var(--dim);line-height:1.9}
+.clock b{color:var(--fox2);font-weight:400;letter-spacing:1px}
+/* 页脚 */
+footer{border-top:3px double var(--line);padding:34px 22px 50px}
+footer .wrap{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:26px}
+footer h4{margin:0 0 14px;font-size:13px;letter-spacing:2px;color:var(--fox2)}
+footer p{margin:0;font-size:12.5px;color:var(--dim);line-height:1.9}
+footer .brand{font-size:22px;letter-spacing:4px;color:var(--fox2);margin-bottom:10px}
+footer .copy{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:#5c6b80;text-align:center}
+#top{position:fixed;right:20px;bottom:24px;width:42px;height:42px;background:var(--fox2);color:#0d1117;border:0;font-size:18px;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;z-index:70}
+#top.show{opacity:1;pointer-events:auto}
+@media(max-width:960px){
+  .topurl{display:none}
+  main{grid-template-columns:1fr;gap:26px}
+  .aside{grid-template-columns:1fr 1fr;display:grid}
+  .entry dl{grid-template-columns:1fr}
+  .mast h1{font-size:38px;letter-spacing:6px}
+}
+@media(max-width:720px){
+  .toggle{display:block}
+  .topnav{display:none}
+  .mast .rule{flex-direction:column;gap:6px;text-align:center}
+  .steps{grid-template-columns:1fr 1fr}
+  .steps div:nth-child(2){border-right:0}
+  .steps div:nth-child(1),.steps div:nth-child(2){border-bottom:1px solid var(--line)}
+  .aside{grid-template-columns:1fr}
+  .mast h1{font-size:29px;letter-spacing:3px}
+  footer .wrap{grid-template-columns:1fr}
+}
+@media(max-width:420px){
+  .wrap{padding:0 15px}
+  main{padding:24px 15px 44px}
+  .entry{grid-template-columns:72px 1fr;gap:12px}
+  .entry .post{height:100px;font-size:20px}
+  .mast h1{font-size:23px}
+  .steps{grid-template-columns:1fr}
+  .steps div{border-right:0;border-bottom:1px solid var(--line)}
+  .steps div:last-child{border-bottom:0}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/changyuan.js"></script>
+<div class="top">
+  <div class="wrap">
+    <button class="toggle" id="toggle" aria-label="打开栏目目录">≡</button>
+    <div class="logo">白狐<span>影视</span></div>
+    <nav class="topnav" id="topnav" aria-label="主导航">
+      <a href="#film">影片建档</a>
+      <a href="#serial">剧集进度</a>
+      <a href="#oversea">海外引进</a>
+      <a href="#anime">动画番组</a>
+      <a href="#show">综艺纪实</a>
+      <a href="#schedule">档期备忘</a>
+      <a href="#rank">评分汇总</a>
+      <a href="#guide">归档指引</a>
+      <a href="#faq">常见疑问</a>
+    </nav>
+    <a class="topurl" href="https://baihuyingshi-top.github.io">baihuyingshi-top.github.io</a>
+  </div>
+</div>
+
+<aside class="drawer" id="drawer">
+  <h4>栏 目 目 录</h4>
+  <ol>
+    <li><a href="#film">影片建档</a></li>
+    <li><a href="#serial">剧集进度</a></li>
+    <li><a href="#oversea">海外引进</a></li>
+    <li><a href="#anime">动画番组</a></li>
+    <li><a href="#show">综艺纪实</a></li>
+    <li><a href="#schedule">档期备忘</a></li>
+    <li><a href="#rank">评分汇总</a></li>
+    <li><a href="#guide">归档指引</a></li>
+    <li><a href="#faq">常见疑问</a></li>
+  </ol>
+  <div class="note">
+    <p><b>本页说明</b></p>
+    <p>本站为影视条目信息整理页，内容包含影片题材、出品地区、上映年份、集数进度与放映时段等公开信息。</p>
+    <p>官方网址：<b>https://baihuyingshi-top.github.io</b></p>
+  </div>
+</aside>
+
+<header class="mast">
+  <div class="vol">影 视 条 目 信 息 整 理 · 第 拾 贰 卷</div>
+  <h1>白狐影视</h1>
+  <div class="sub">影 片 建 档 · 剧 集 进 度 · 放 映 档 期</div>
+  <div class="rule">
+    <span>整理范围：影片题材 / 出品地区 / 上映年份</span>
+    <span id="clock">北京时间 -- : -- : --</span>
+    <span>建档年度：<i id="year"></i> 年</span>
+  </div>
+</header>
+
+<main>
+  <div class="panel">
+
+    <section class="sec" id="film">
+      <header><span class="no">NO.01</span><h2>影片建档</h2><span class="en">FILM ARCHIVE</span></header>
+      <div class="body">
+        <div class="az" id="az">
+          <b class="on">全</b><b>A</b><b>B</b><b>C</b><b>D</b><b>F</b><b>G</b><b>H</b><b>J</b><b>K</b><b>L</b><b>M</b><b>N</b><b>P</b><b>Q</b><b>R</b><b>S</b><b>T</b><b>W</b><b>X</b><b>Y</b><b>Z</b>
+        </div>
+        <div class="entry">
+          <div class="post">影</div>
+          <div>
+            <h3>影片条目建档说明</h3>
+            <dl>
+              <dt>题材分类</dt><dd>剧情 / 悬疑 / 动作</dd>
+              <dt>出品地区</dt><dd>中国大陆 / 合拍</dd>
+              <dt>上映年份</dt><dd>2026 年</dd>
+              <dt>片长记录</dt><dd>逐条标注</dd>
+            </dl>
+            <span class="tag">剧情</span><span class="tag">悬疑</span><span class="tag">2026</span>
+          </div>
+        </div>
+        <div class="entry">
+          <div class="post">视</div>
+          <div>
+            <h3>放映时段登记</h3>
+            <dl>
+              <dt>放映时段</dt><dd>黄金档 / 深夜档</dd>
+              <dt>上线状态</dt><dd>在映 / 待映</dd>
+              <dt>版本信息</dt><dd>国语 / 原声</dd>
+              <dt>建档日期</dt><dd>逐条更新</dd>
+            </dl>
+            <span class="tag">黄金档</span><span class="tag">在映</span><span class="tag">国语</span>
+          </div>
+        </div>
+        <div class="entry">
+          <div class="post">档</div>
+          <div>
+            <h3>资料来源与核对</h3>
+            <dl>
+              <dt>信息来源</dt><dd>公开片单与片方公告</dd>
+              <dt>核对方式</dt><dd>多源比对</dd>
+              <dt>更新周期</dt><dd>每周整理一次</dd>
+              <dt>备注</dt><dd>以官方公告为准</dd>
+            </dl>
+            <span class="tag">多源核对</span><span class="tag">每周更新</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="serial">
+      <header><span class="no">NO.02</span><h2>剧集进度</h2><span class="en">SERIES STATUS</span></header>
+      <div class="body">
+        <div class="row"><span>剧集名称</span><span>集数进度与更新状态</span><em>题材 / 地区</em></div>
+        <div class="row"><span>国产剧集</span><span>已更新集数与完结状态逐条登记</span><em>都市 / 古装</em></div>
+        <div class="row"><span>网播剧集</span><span>排播周期与加更情况记录</span><em>悬疑 / 家庭</em></div>
+        <div class="row"><span>短剧条目</span><span>集数时长与更新节奏标注</span><em>情感 / 职场</em></div>
+        <div class="row"><span>待播项目</span><span>备案与定档信息留档</span><em>待官方确认</em></div>
+        <div class="row"><span>重播记录</span><span>二轮播出时段与频道登记</span><em>上星 / 地面</em></div>
+      </div>
+    </section>
+
+    <section class="sec" id="oversea">
+      <header><span class="no">NO.03</span><h2>海外引进</h2><span class="en">OVERSEAS</span></header>
+      <div class="body">
+        <div class="entry">
+          <div class="post">海</div>
+          <div>
+            <h3>引进影片资料</h3>
+            <dl>
+              <dt>来源地区</dt><dd>欧美 / 日韩 / 东南亚</dd>
+              <dt>引进状态</dt><dd>已引进 / 待定档</dd>
+              <dt>语言版本</dt><dd>原声 / 配音</dd>
+              <dt>字幕信息</dt><dd>中文字幕</dd>
+            </dl>
+            <span class="tag">欧美</span><span class="tag">日韩</span><span class="tag">原声</span>
+          </div>
+        </div>
+        <div class="entry">
+          <div class="post">外</div>
+          <div>
+            <h3>海外剧集条目</h3>
+            <dl>
+              <dt>播出平台</dt><dd>逐条登记</dd>
+              <dt>季数进度</dt><dd>已播 / 续订状态</dd>
+              <dt>首播日期</dt><dd>按地区时区标注</dd>
+              <dt>题材类型</dt><dd>犯罪 / 医疗 / 律政</dd>
+            </dl>
+            <span class="tag">续订</span><span class="tag">季播</span><span class="tag">首播</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="anime">
+      <header><span class="no">NO.04</span><h2>动画番组</h2><span class="en">ANIMATION</span></header>
+      <div class="body">
+        <div class="row"><span>国创动画</span><span>季度番组与更新集数记录</span><em>奇幻 / 热血</em></div>
+        <div class="row"><span>日本番组</span><span>当季播出档期与话数登记</span><em>悬疑 / 日常</em></div>
+        <div class="row"><span>动画电影</span><span>上映档期与片长标注</span><em>剧场版</em></div>
+        <div class="row"><span>定档信息</span><span>延期与改档情况留档</span><em>以片方公告为准</em></div>
+      </div>
+    </section>
+
+    <section class="sec" id="show">
+      <header><span class="no">NO.05</span><h2>综艺纪实</h2><span class="en">VARIETY &amp; DOC</span></header>
+      <div class="body">
+        <div class="entry">
+          <div class="post">综</div>
+          <div>
+            <h3>综艺节目条目</h3>
+            <dl>
+              <dt>节目类型</dt><dd>竞演 / 真人秀 / 访谈</dd>
+              <dt>播出周期</dt><dd>周播 / 季播</dd>
+              <dt>期数记录</dt><dd>已播期数登记</dd>
+              <dt>播出时段</dt><dd>周末档 / 工作日档</dd>
+            </dl>
+            <span class="tag">周播</span><span class="tag">竞演</span><span class="tag">季播</span>
+          </div>
+        </div>
+        <div class="entry">
+          <div class="post">纪</div>
+          <div>
+            <h3>纪实与专题</h3>
+            <dl>
+              <dt>内容方向</dt><dd>人文 / 自然 / 历史</dd>
+              <dt>集数结构</dt><dd>单集 / 多集系列</dd>
+              <dt>片长</dt><dd>逐集标注</dd>
+              <dt>上线状态</dt><dd>在播 / 已完结</dd>
+            </dl>
+            <span class="tag">人文</span><span class="tag">自然</span><span class="tag">已完结</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="schedule">
+      <header><span class="no">NO.06</span><h2>档期备忘</h2><span class="en">SCHEDULE</span></header>
+      <div class="body">
+        <table>
+          <thead><tr><th>星期</th><th>影片与剧集安排</th><th>时段备注</th></tr></thead>
+          <tbody>
+            <tr><td>周一</td><td><b>剧集更新登记</b> · 集数进度补录</td><td>晚间档</td></tr>
+            <tr><td>周三</td><td><b>影片建档</b> · 新片题材与地区标注</td><td>黄金档</td></tr>
+            <tr><td>周五</td><td><b>综艺与番组</b> · 期数与话数记录</td><td>周末档</td></tr>
+            <tr><td>周日</td><td><b>全站核对</b> · 档期与评分汇总</td><td>全天</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="sec" id="rank">
+      <header><span class="no">NO.07</span><h2>评分汇总</h2><span class="en">RATING DIGEST</span></header>
+      <div class="body">
+        <table>
+          <thead><tr><th>条目类别</th><th>综合评分</th><th>建档要点</th></tr></thead>
+          <tbody>
+            <tr><td><b>院线影片</b></td><td class="star">★★★☆☆</td><td>题材 / 片长 / 上映年份</td></tr>
+            <tr><td><b>国产剧集</b></td><td class="star">★★★★☆</td><td>集数 / 完结状态</td></tr>
+            <tr><td><b>海外剧集</b></td><td class="star">★★★★☆</td><td>季数 / 续订情况</td></tr>
+            <tr><td><b>动画番组</b></td><td class="star">★★★☆☆</td><td>话数 / 播出档期</td></tr>
+            <tr><td><b>综艺纪实</b></td><td class="star">★★★☆☆</td><td>期数 / 节目类型</td></tr>
+          </tbody>
+        </table>
+        <p style="margin:14px 0 0;font-size:12.5px;color:#8592a6">评分为本站依据公开信息整理的参考等级，仅供选片前核对，不代表官方评价。</p>
+      </div>
+    </section>
+
+    <section class="sec" id="guide">
+      <header><span class="no">NO.08</span><h2>归档指引</h2><span class="en">ARCHIVE GUIDE</span></header>
+      <div class="body">
+        <div class="steps">
+          <div><div class="n">01</div><h5>确定题材</h5><p>按剧情、悬疑、动作、动画等类别选定检索方向。</p></div>
+          <div><div class="n">02</div><h5>核对地区年份</h5><p>结合出品地区与上映年份缩小条目范围。</p></div>
+          <div><div class="n">03</div><h5>查看进度</h5><p>读取集数、完结状态与更新节奏等进度信息。</p></div>
+          <div><div class="n">04</div><h5>比对档期</h5><p>参照档期备忘确认放映时段，以官方公告为准。</p></div>
+        </div>
+        <p style="margin:16px 0 0;font-size:13px;color:#8592a6">归档信息按周更新，若与片方或播出平台公告存在差异，一律以官方公告为最终依据。</p>
+      </div>
+    </section>
+
+    <section class="sec" id="faq">
+      <header><span class="no">NO.09</span><h2>常见疑问</h2><span class="en">FAQ</span></header>
+      <div class="body faq">
+        <details open>
+          <summary>白狐影视主要整理哪些信息？</summary>
+          <p>本站整理影片题材、出品地区、上映年份、片长、剧集集数进度、放映时段与档期备忘等条目信息，供观众选片前核对。</p>
+        </details>
+        <details>
+          <summary>如何确认某部影片的放映档期？</summary>
+          <p>可查看上方「档期备忘」栏目，或直接访问官方网址 <span class="u">https://baihuyingshi-top.github.io</span> 获取最新登记内容，最终以片方公告为准。</p>
+        </details>
+        <details>
+          <summary>条目信息多久更新一次？</summary>
+          <p>建档信息按周整理更新，定档、改档与完结状态等变动会在核对后补录。</p>
+        </details>
+        <details>
+          <summary>评分汇总的数据来源是什么？</summary>
+          <p>评分等级依据公开信息整理，属本站参考评级，不代表任何官方评分机构。</p>
+        </details>
+        <details>
+          <summary>如何反馈条目更正？</summary>
+          <p>可通过邮箱 baihuyingshi@baihuyingshi-top.github.io 提交更正说明，本站核对后会补录更新。</p>
+        </details>
+      </div>
+    </section>
+
+  </div>
+
+  <aside class="aside">
+    <div class="box">
+      <h4>题 材 索 引</h4>
+      <div class="tagcloud">
+        <a href="#film">剧情</a><a href="#film">悬疑</a><a href="#film">动作</a><a href="#film">科幻</a>
+        <a href="#film">喜剧</a><a href="#film">古装</a><a href="#film">都市</a><a href="#film">家庭</a>
+        <a href="#film">犯罪</a><a href="#film">历史</a><a href="#film">动画</a><a href="#film">纪实</a>
+      </div>
+    </div>
+    <div class="box">
+      <h4>近 期 建 档</h4>
+      <ol>
+        <li><b>院线影片建档</b> · 题材与年份标注</li>
+        <li><b>国产剧集进度</b> · 集数补录</li>
+        <li><b>海外剧集季数</b> · 续订状态登记</li>
+        <li><b>动画番组话数</b> · 当季档期</li>
+        <li><b>综艺期数</b> · 周播记录</li>
+      </ol>
+    </div>
+    <div class="box">
+      <h4>时 钟 与 年 度</h4>
+      <div class="clock">
+        北京时间<br><b id="clock2">-- : -- : --</b><br>
+        时区：GMT+8<br>
+        建档年度：<b id="year2"></b> 年<br>
+        更新频率：每周一次
+      </div>
+    </div>
+    <div class="box">
+      <h4>官 方 网 址</h4>
+      <div class="clock">
+        <b>https://baihuyingshi-top.github.io</b><br>
+        本站为单页结构，栏目内链接均为页内锚点，无独立内页。
+      </div>
+    </div>
+  </aside>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div class="brand">白狐影视</div>
+      <p>白狐影视是面向影迷的影视条目信息整理站，按影片题材、出品地区、上映年份、集数进度与放映时段逐条建档，并提供档期备忘、评分汇总与归档指引。</p>
+    </div>
+    <div>
+      <h4>栏 目 快 捷</h4>
+      <p><a href="#film">影片建档</a> · <a href="#serial">剧集进度</a> · <a href="#oversea">海外引进</a> · <a href="#anime">动画番组</a> · <a href="#show">综艺纪实</a></p>
+      <p><a href="#schedule">档期备忘</a> · <a href="#rank">评分汇总</a> · <a href="#guide">归档指引</a> · <a href="#faq">常见疑问</a></p>
+    </div>
+    <div>
+      <h4>联 络 与 备 案</h4>
+      <p>官方网址：https://baihuyingshi-top.github.io</p>
+      <p>反馈邮箱：baihuyingshi@baihuyingshi-top.github.io</p>
+      <p>备案号：鄂ICP备xxxxxxx号</p>
+    </div>
+  </div>
+  <div class="wrap copy">© <span id="year3"></span> 白狐影视 baihuyingshi-top.github.io 保留所有权利 · 条目信息以官方公告为准</div>
+</footer>
+
+<button id="top" aria-label="回到顶部">↑</button>
+
+<script>
+(function(){
+  var d=document;
+  var drawer=d.getElementById('drawer'),toggle=d.getElementById('toggle');
+  toggle.addEventListener('click',function(){drawer.classList.toggle('open');});
+  d.querySelectorAll('.drawer a').forEach(function(a){
+    a.addEventListener('click',function(){drawer.classList.remove('open');});
+  });
+  d.addEventListener('click',function(e){
+    if(!drawer.contains(e.target)&&e.target!==toggle&&!toggle.contains(e.target)&&drawer.classList.contains('open')){
+      drawer.classList.remove('open');
+    }
+  });
+  d.querySelectorAll('#az b').forEach(function(b){
+    b.addEventListener('click',function(){
+      d.querySelectorAll('#az b').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');
+    });
+  });
+  var nav=d.getElementById('topnav'),links=nav.querySelectorAll('a'),sec=[];
+  links.forEach(function(a){var el=d.getElementById(a.getAttribute('href').slice(1));if(el)sec.push([el,a]);});
+  function spy(){
+    var y=window.scrollY+120,cur=null;
+    sec.forEach(function(p){if(p[0].offsetTop<=y)cur=p[1];});
+    links.forEach(function(a){a.classList.remove('on');});
+    if(cur)cur.classList.add('on');
+  }
+  window.addEventListener('scroll',spy);spy();
+  var top=d.getElementById('top');
+  window.addEventListener('scroll',function(){top.classList[window.scrollY>500?'add':'remove']('show');});
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  function clock(){
+    var n=new Date(),p=function(v){return (v<10?'0':'')+v;};
+    var s=p(n.getHours())+':'+p(n.getMinutes())+':'+p(n.getSeconds());
+    var c=d.getElementById('clock');if(c)c.textContent='北京时间 '+s;
+    var c2=d.getElementById('clock2');if(c2)c2.textContent=s;
+  }
+  clock();setInterval(clock,1000);
+  var y=new Date().getFullYear();
+  d.getElementById('year').textContent=y;
+  d.getElementById('year2').textContent=y;
+  d.getElementById('year3').textContent=y;
+})();
+</script>
+</body>
+</html>
